@@ -22,9 +22,10 @@ def get_horse_form(horse_name: str) -> str:
     Note: This is placeholder data. Connect to a real racing API for actual statistics.
     """
 
-def analyze_track_conditions(track_name: str, condition: str = "good") -> str:
+def analyze_track_conditions(input_str: str) -> str:
     """
     Analyze how track conditions might affect race outcomes.
+    Input format: 'track_name, condition' (e.g., 'Churchill Downs, heavy')
     """
     conditions_info = {
         "heavy": "Heavy tracks favor horses with stamina and a strong finishing kick.",
@@ -32,6 +33,16 @@ def analyze_track_conditions(track_name: str, condition: str = "good") -> str:
         "good": "Good tracks generally favor horses with natural speed.",
         "firm": "Firm tracks often produce faster times and suit front-runners."
     }
+    
+    # Parse input
+    parts = input_str.split(",", 1)
+    if len(parts) == 2:
+        track_name = parts[0].strip()
+        condition = parts[1].strip()
+    else:
+        # If no comma, treat entire input as track name with default condition
+        track_name = input_str.strip()
+        condition = "good"
     
     info = conditions_info.get(condition.lower(), "Track condition not recognized.")
     
